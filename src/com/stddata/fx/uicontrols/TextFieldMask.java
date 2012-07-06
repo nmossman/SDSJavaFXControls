@@ -86,12 +86,12 @@ public class TextFieldMask extends HBox
            lookupButton.disableProperty().set(true); 
     }        
     
-    public final void setValue (Object value)
+    public void setValue (Object value)
     {
         control.setValue(value);
     }   
     
-    public final Object getValue ()
+    public Object getValue ()
     {
         return control.getValue();
     }        

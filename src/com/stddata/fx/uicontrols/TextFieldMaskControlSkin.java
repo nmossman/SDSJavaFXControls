@@ -439,13 +439,18 @@ public class TextFieldMaskControlSkin extends TextField implements Skin<TextFiel
                 setText(EditMaskValueFactory.formatDateTime((Calendar)result, 
                         control.getSpecification(), false));
             }    
-        }    
-        else
-        {
-            Object result = EditMaskValueFactory.parseValue(getText(), control.getSpecification(),false);                
-            if (result != null)
-                control.setValueOnEntry(result);            
-        }    
+            else
+            {
+
+                String result = new String (getText().getBytes());
+                        //EditMaskValueFactory.parseValue(getText(), control.getSpecification(),false);                
+
+                if (result != null)
+                    control.setValueOnEntry(result);  
+
+                //control.getTextProperty().set(getText());
+            }    
+        } 
     }        
 
 

@@ -156,7 +156,7 @@ public class TextFieldMaskControl extends Control
             super.requestFocus();
     }        
     
-    public final void setValue (Object value)
+    public void setValue (Object value)
     {
         if (getValueOnEntry() == null)
             setValueOnEntry(value);
@@ -170,15 +170,15 @@ public class TextFieldMaskControl extends Control
             setText (EditMaskValueFactory.formatToSpecification(value, specification,false));
     }  
     
-    public final Object getValue ()
+    public Object getValue ()
     {
-        Object result = getValueOnEntry();
-        StringBuilder parse = EditMaskHelper.tidyPostInput(specification.getEditMask(), new StringBuilder(this.getText()), specification);
-        result = EditMaskValueFactory.parseValue(parse.toString(), specification,false);
+        return getValueOnEntry();
+        /*StringBuilder parse = EditMaskHelper.tidyPostInput(specification.getEditMask(), new StringBuilder(getText()), specification);
+        Object result = EditMaskValueFactory.parseValue(parse.toString(), specification,false);
         if (result == null)
             result = getValueOnEntry();
         
-        return result;
+        return result;*/
     }        
 
 

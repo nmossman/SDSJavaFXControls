@@ -50,6 +50,8 @@ public class UiControlDemoStage extends Stage
 {
     protected Group root;
     protected GridPane gridpane;
+    protected TextFieldMask basic;
+    
     public UiControlDemoStage (final Stage owner)
     {         
         super();
@@ -76,7 +78,7 @@ public class UiControlDemoStage extends Stage
         normal.setUserData("Normal");
         
         Label labelBasic = new Label ();
-        TextFieldMask basic = new TextFieldMask ();
+        basic = new TextFieldMask ();
         basic.setUserData("Basic");
         
         Label labelGLAccount = new Label ();
@@ -194,23 +196,10 @@ public class UiControlDemoStage extends Stage
         
         root.getChildren().add(gridpane);
         
-        TextFieldMaskLookupCallBack cb = new TextFieldMaskLookupCallBack () {
-
-            @Override
-            public void call(TextFieldMaskControl control, String editText,boolean focusCall)
-            {
-
-            }
-        };
-
-        
-        
-        
-        GLCode.setLookupCallback(cb);
-        TableView tv = new TableView ();
-
 
         gridpane.autosize();
         root.autosize();
-    }    
+    }   
+    
+               
 }

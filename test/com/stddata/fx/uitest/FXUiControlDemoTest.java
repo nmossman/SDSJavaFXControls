@@ -185,6 +185,32 @@ public class FXUiControlDemoTest {
         text = basic.getControl().getText();
         Assert.assertEquals (20,text.length());
         Assert.assertEquals ("",text.trim());
+        
+        basic.as(Text.class).type ("Checking getValue()");
+        glcode.getControl().requestFocus();
+        
+        Calendar c = Calendar.getInstance();
+        boolean timeout = false;
+        while (!timeout)
+        {
+            String newText = (String)basic.getControl().getTextFieldMaskControl().getParentTextFieldMask().getValue();
+            if (!newText.trim().isEmpty())
+            {    
+                Assert.assertEquals ("Checking getValue() ",newText);
+                break;
+            }
+            
+            Calendar d = Calendar.getInstance();
+            if (d.getTimeInMillis()-c.getTimeInMillis() > 6000)
+                timeout = true;
+                
+        }
+        
+        if (timeout)
+            Assert.fail("Timeouted on Basic getValue() Check");        
+        
+        
+        
 
     }    
     
