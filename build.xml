@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="SDSJavaFXControls" default="all" basedir=".">
+    <description>Builds, tests, and runs the project SDSJavaFXControls.</description>
+    <property name="lib.dir" value="./lib" />
+    <property name="src.dir" value="./src" />
+    <property name="test.src.dir" value="./test" />    
+    <property name="classes.dir" value="./classes" />
+    <property name="test.classes.dir" value="./testclasses" />    
+    <property name="dist.dir" value="./dist" />
+    <property name="fxsdk.dir" value="C:/Program Files/Oracle/JavaFX 2.1 SDK/rt/lib" />
+    
+
+    
+    <target name="clean">
+       <delete dir="${classes.dir}"/>
+       <delete dir="${dist.dir}"/>       
+       <delete dir="${test.classes.dir}"/>       
+    </target>
+    
+    <target name="init" depends="clean" >
+       <mkdir dir="${classes.dir}"/>
+       <mkdir dir="${dist.dir}"/>       
+       <mkdir dir="${test.classes.dir}"/>       
+    </target>
+    
+    <target name="compile" depends="init" >
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" encoding="UTF-8" >
+            <classpath>
+              <fileset dir="${lib.dir}">
+                  <include name="**/*.jar"/>
+               </fileset>
+               <fileset dir="${fxsdk.dir}">
+                  <include name="**/*.jar"/>
+               </fileset>
+            </classpath>    
+        </javac>
+        <copy todir="${classes.dir}">
+            <fileset dir="${src.dir}"
+               includes="**/*.css" />
+        </copy>
+        
+        <javac srcdir="${test.src.dir}" destdir="${test.classes.dir}" encoding="UTF-8">
+            <classpath>
+              <dirset dir="${classes.dir}">
+                 <include name="**"/>
+              </dirset>
+              <fileset dir="${lib.dir}">
+                  <include name="**/*.jar"/>
+               </fileset>
+               <fileset dir="${fxsdk.dir}">
+                  <include name="**/*.jar"/>
+               </fileset>
+            </classpath>    
+        </javac>        
+    </target>
+    
+    <target name="test" depends="compile" >
+        <junit printsummary="true" haltonfailure="true" >
+            <formatter type="brief" usefile="false"/>
+            <classpath>
+                <pathelement path="${jar.junit}"/>
+                <pathelement path="${test.classes.dir}"/>
+                <pathelement path="${classes.dir}"/>
+                <fileset dir="${lib.dir}">
+                  <include name="**/*.jar"/>
+                </fileset>
+                <fileset dir="${fxsdk.dir}">
+                  <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+            <batchtest>
+                <fileset dir="${test.classes.dir}" includes="**/*Test.class" excludes="**/*DemoTest.class"/>
+            </batchtest>
+        </junit>
+        
+        <junit printsummary="true" haltonfailure="true" fork="true" showoutput="true">
+            <formatter type="brief" usefile="false"/>
+            <classpath>
+                <pathelement path="${jar.junit}"/>
+                <pathelement path="${test.classes.dir}"/>
+                <pathelement path="${classes.dir}"/>
+                <fileset dir="${lib.dir}">
+                  <include name="**/*.jar"/>
+                </fileset>
+                <fileset dir="${fxsdk.dir}">
+                  <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+            <batchtest>
+                <fileset dir="${test.classes.dir}" includes="**/*DemoTest.class" />
+            </batchtest>
+        </junit>        
+    </target>    
+    
+   <target name="jar" depends="test">
+        <jar destfile="${dist.dir}/SDSJavaFXControls.jar" basedir="${classes.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="com.stddata.fx.uitest.FXUiControlDemo"/>
+            </manifest>
+        </jar>
+    </target>   
+    
+    
+    <target name="all" depends="jar">
+        
+    </target>
+</project>
